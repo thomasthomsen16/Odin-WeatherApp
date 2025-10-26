@@ -1,14 +1,16 @@
 let APIkey = "M3DMARFN86JZGTZRXDCGG36WJ";
 
+// Get weather data from city
 async function getWeather(city) {
     const response = await fetch("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/" + city + "?unitGroup=metric&key=" + APIkey + "&contentType=json");
     const rawWeatherData = await response.json();
-    console.log(rawWeatherData);
     const processedData = processRawData(rawWeatherData);
     console.log(processedData);
     return processedData;
 }
 
+
+// Callback function to process raw data and return needed data
 function processRawData (rawData) {
     return {
         temperature: rawData.currentConditions.temp,
@@ -25,4 +27,8 @@ function processRawData (rawData) {
     }
 }
 
-getWeather("London");
+// Get user input and run getWeather 
+document.getElementById("searchBTN").addEventListener("click", ()=>{
+    const userInput = document.getElementById("city").value;
+    getWeather(userInput);
+});
